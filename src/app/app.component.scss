@@ -3,6 +3,27 @@ $grass_color:#1aaa15;
 $stem_light:#0e770b;
 $stem_dark:#0c490a;
 
+// cubic-bezier(0.01, 0.82, 0.64, 0.92)
+$grow_anim_duration: 4s;
+$grow_anim_timing_fnc: linear;
+$grow_anim_delay:2s;
+
+$rLeaf_anim_duration: 4s;
+$rLeaf_anim_timing_fnc: linear;
+$rLeaf_anim_delay:2s;
+
+$leaf1_grow_anim_duration:4s;
+$leaf1_grow_anim_delay:2s;
+
+$leaf2_grow_anim_duration:4s;
+$leaf2_grow_anim_delay:2s;
+
+$leaf3_grow_anim_duration:4s;
+$leaf3_grow_anim_delay:2s;
+
+$leaf4_grow_anim_duration:4s;
+$leaf4_grow_anim_delay:2s;
+
 .flex{
   display: flex;
 }
@@ -41,6 +62,10 @@ body{
   position: relative;
 }
 
+#grass_patch_2{
+  z-index:3;
+}
+
 .grass_blade{
   position: relative;
   bottom: 0;
@@ -50,7 +75,7 @@ body{
   border-left: 8px solid $grass_color;
   -webkit-mask-image: linear-gradient(to top, transparent 20%, #000000);
   transform-origin: bottom center;
-  animation: grow 5s linear 0.5s;
+  animation: grow $grow_anim_duration $grow_anim_timing_fnc $grow_anim_delay;
 }
 
 .small{
@@ -72,10 +97,12 @@ body{
 .flower_container{
   height:300px;
   width:10px;
-  animation: grow 5s linear 0.5s;
+  will-change: transform;
+  animation: grow $grow_anim_duration $grow_anim_timing_fnc $grow_anim_delay;
   bottom:-60px;
   position: relative;
   transform-origin: bottom center ;
+  z-index:2;
 }
 
 .stalk{
@@ -86,11 +113,12 @@ body{
 }
 
 .leaf{
-  width: 400%;
-  height: 5.5%;
+  width: 100%;
+  height: 100%;
   border-radius: 10% 190% 30% 160% / 0px 170% 20% 180%;
   background-image:linear-gradient(to top, $stem_dark,$stem_light) ;
-  animation: grow 5s linear 0.5s;
+  will-change: transform;
+  animation: grow $grow_anim_duration $grow_anim_timing_fnc $grow_anim_delay;
 }
 
 .left_leaf{
@@ -99,38 +127,103 @@ body{
 
 .right_leaf{
   transform-origin: bottom left;
-  transform: scaleX(-1);
 }
 
-#leaf-1{
+.leaf_container{
+  width: 400%;
+  height: 5.5%;
+}
+
+#leaf-1-container{
   bottom: -180px;
   position: relative;
   left: -38px;
-  transform: rotate(15deg);
+  will-change: transform;
+  animation: grow $leaf1_grow_anim_duration $grow_anim_timing_fnc $leaf1_grow_anim_delay;
 }
 
-#leaf-2{
+#leaf-1{
+  -webkit-transform: rotate(15deg);
+  transform: rotate(15deg);
+  animation: left-leaf-anim $rLeaf_anim_duration $rLeaf_anim_timing_fnc $rLeaf_anim_delay;
+  will-change: transform;
+}
+
+#leaf-2-container{
   bottom: -80px;
   position: relative;
   left: -38px;
+  will-change: transform;
+  animation: grow $leaf2_grow_anim_duration $grow_anim_timing_fnc $leaf2_grow_anim_delay;
+}
+
+#leaf-2{
+  -webkit-transform: rotate(15deg);
   transform: rotate(15deg);
+  will-change: transform;
+  animation: left-leaf-anim $rLeaf_anim_duration $rLeaf_anim_timing_fnc $rLeaf_anim_delay;
+}
+
+#leaf-3-container{
+  bottom: 185px;
+  position: relative;
+  left: 17px;
+  will-change: transform;
+  animation: grow $leaf3_grow_anim_duration $grow_anim_timing_fnc $leaf3_grow_anim_delay;
 }
 
 #leaf-3{
-  bottom:10px;
-  position: relative;
+  -webkit-transform: rotate(-35deg);
+  transform: rotate(-35deg);
+  will-change: transform;
+  animation: right-leaf-anim $rLeaf_anim_duration $rLeaf_anim_timing_fnc $rLeaf_anim_delay;
 }
 
-#leaf-4{
-  bottom:20px;
+#leaf-4-container{
+  bottom: 285px;
   position: relative;
+  left: 17px;
+  will-change: transform;
+  animation: grow $leaf4_grow_anim_duration $grow_anim_timing_fnc $leaf4_grow_anim_delay;
+}
+
+
+#leaf-4{
+  -webkit-transform: rotate(-35deg);
+  transform: rotate(-35deg);
+  will-change: transform;
+  animation:right-leaf-anim $rLeaf_anim_duration $rLeaf_anim_timing_fnc $rLeaf_anim_delay;
+}
+
+@keyframes right-leaf-anim{
+  from{
+    -webkit-transform: translateX(-10px) rotate(-35deg);
+    transform: translateX(-10px) rotate(-35deg);
+  }
+  to{
+    -webkit-transform: translateX(0px) rotate(-35deg);
+    transform: translateX(0px) rotate(-35deg);
+  }
+}
+
+@keyframes left-leaf-anim{
+  from{
+    -webkit-transform: translateX(100px) rotate(15deg);
+    transform: translateX(100px) rotate(15deg);
+  }
+  to{
+    -webkit-transform: translateX(0px) rotate(15deg);
+    transform: translateX(0px) rotate(15deg);
+  }
 }
 
 @keyframes grow {
   from{
+    -webkit-transform: scale(0);
     transform: scale(0);
   }
   to{
-    transform: scale(1);
+    -webkit-transform: scale(1.02);
+    transform: scale(1.02);
   }
 }
